@@ -155,10 +155,11 @@ def print_menu(exits):
     """
     print("You can:")
     # Iterate over available exits
-    for direction in exits:
+    for y,x in exits.items():
         # Print the exit name and where it leads to
-        print_exit(direction, exit_leads_to(exits, direction))
+        print_menu_line(y,x)
 
+    #direction, exit_leads_to(exits, direction)
     print("Where do you want to go?")
 
 
@@ -206,9 +207,14 @@ def menu(exits):
         normalised_user_input = normalise_input(user_input)
 
         # Check if the input makes sense (is valid exit)
+        if is_valid_exit(exits, user_input) == True:
             # If so, return the player's choice
 
-        return normalisd_user_input
+            return normalised_user_input
+        else:
+            print()
+            print("Enter a valid exit")
+            print()
 
 
 
@@ -244,7 +250,7 @@ def main():
         display_room(current_room)
 
         # What are the possible exits from the current room?
-        exits = menu(current_room["exits"])
+        exits = current_room["exits"]
 
         # Show the menu with exits and ask the player
         direction = menu(exits)
